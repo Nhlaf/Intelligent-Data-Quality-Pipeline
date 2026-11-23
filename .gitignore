@@ -221,3 +221,28 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ==========================================
+# Intelligent Data Quality Pipeline
+# ==========================================
+
+# Environment files containing credentials
+.env.*
+!.env.example
+
+# DuckDB databases
+*.duckdb
+*.duckdb.wal
+
+# Generated data pipeline outputs
+data/bronze/
+data/silver/
+data/gold/
+data/quarantine/
+
+# Machine learning model artifacts
+models/*.pkl
+models/*.joblib
+
+# Temporary data files
+*.tmp

@@ -1,0 +1,6 @@
+customer_id,full_name,email,customer_status
+C001,Thabo Mokoena,thabo@example.com,Active
+C002,Lerato Nkosi,lerato@example.com,Active
+C003,Sipho Dlamini,sipho@example.com,Dormant
+C004,Ayesha Patel,ayesha@example.com,Active
+C005,Nomsa Khumalo,nomsa@example.com,Closeds
