@@ -1,0 +1,5 @@
+{
+  "validation_success_threshold": 95.0,
+  "completeness_threshold": 98.0,
+  "maximum_duplicate_count": 0
+}
