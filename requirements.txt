@@ -4,3 +4,5 @@ duckdb>=1.1,<2.0
 pyarrow>=18,<24
 python-dotenv>=1.0,<2.0
 pytest>=8,<10
+streamlit>=1.40,<2.0
+httpx2

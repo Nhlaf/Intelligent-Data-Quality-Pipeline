@@ -246,3 +246,8 @@ models/*.joblib
 
 # Temporary data files
 *.tmp
+data/gold/pipeline_runs/*.json
+# Application logs
+logs/
+*.log
+*.log.*

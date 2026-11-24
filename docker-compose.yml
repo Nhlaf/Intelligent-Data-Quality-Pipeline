@@ -1,0 +1,90 @@
+services:
+
+  pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: intelligent-data-quality:local
+
+    container_name: data-quality-pipeline
+
+    command:
+      - python
+      - -m
+      - scripts.run_pipeline
+
+    env_file:
+      - .env
+
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+
+    profiles:
+      - pipeline
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: intelligent-data-quality:local
+
+    container_name: data-quality-api
+
+    command:
+      - python
+      - -m
+      - uvicorn
+      - api.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./data:/app/data:ro
+
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=5)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: intelligent-data-quality:local
+
+    container_name: data-quality-dashboard
+
+    command:
+      - python
+      - -m
+      - streamlit
+      - run
+      - dashboard/app.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+      - --server.headless=true
+
+    ports:
+      - "8501:8501"
+
+    volumes:
+      - ./data:/app/data:ro
+
+    restart: unless-stopped
