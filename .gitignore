@@ -251,3 +251,5 @@ data/gold/pipeline_runs/*.json
 logs/
 *.log
 *.log.*
+# Locally downloaded Docker dependencies
+wheelhouse/

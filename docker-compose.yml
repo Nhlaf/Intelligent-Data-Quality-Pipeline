@@ -6,20 +6,16 @@ services:
       dockerfile: Dockerfile
 
     image: intelligent-data-quality:local
-
     container_name: data-quality-pipeline
 
-    command:
-      - python
-      - -m
-      - scripts.run_pipeline
+    command: python -m scripts.run_pipeline
 
     env_file:
       - .env
 
     volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs
+      - ./data:/app/data:rw
+      - ./logs:/app/logs:rw
 
     profiles:
       - pipeline
@@ -30,18 +26,12 @@ services:
       dockerfile: Dockerfile
 
     image: intelligent-data-quality:local
-
     container_name: data-quality-api
 
-    command:
-      - python
-      - -m
-      - uvicorn
-      - api.main:app
-      - --host
-      - 0.0.0.0
-      - --port
-      - "8000"
+    command: >
+      python -m uvicorn api.main:app
+      --host 0.0.0.0
+      --port 8000
 
     ports:
       - "8000:8000"
@@ -68,18 +58,13 @@ services:
       dockerfile: Dockerfile
 
     image: intelligent-data-quality:local
-
     container_name: data-quality-dashboard
 
-    command:
-      - python
-      - -m
-      - streamlit
-      - run
-      - dashboard/app.py
-      - --server.address=0.0.0.0
-      - --server.port=8501
-      - --server.headless=true
+    command: >
+      python -m streamlit run dashboard/app.py
+      --server.address=0.0.0.0
+      --server.port=8501
+      --server.headless=true
 
     ports:
       - "8501:8501"
